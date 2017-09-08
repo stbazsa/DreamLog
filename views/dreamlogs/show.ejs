@@ -1,0 +1,196 @@
+<% include ../partials/header %>
+
+<div class='ui container'>        
+  <form class='ui form' action="/dreamlogs/<%= dreamlog._id %>" method="POST">
+    <!--Dátum, sorszám, hangfelvétel-->
+    <div class='ui segment'>
+      <div class='ui labeled input'>
+        <div class='ui label'>Dátum</div>
+        <input disabled class='' type='date' name='dreamlog[dreamDate]' value="<%= moment(dreamlog.dreamDate).format("YYYY-MM-DD") %>"  placeholder='ÉÉÉÉ.HH.NN'>
+      </div>
+    
+      <div class='ui labeled input'>
+        <div class='ui label'>Sorszám</div>
+        <input class='' type="text" name="dreamlog[dreamNumber]" value="<%= dreamlog.dreamNumber %>" placeholder='(1..50)' maxlength='2'>
+      </div>
+    </div>
+    
+    
+     <div class='ui segment'>
+      <div class='ui fluid labeled input'>
+        <div class='ui label' >
+            <a href='<%= dreamlog.AudioURLs %>'> <i class='external icon'></i></a>  
+                        Hangfelvétel URL</div>
+        <input class='' type="url" placeholder='http://www.pelda.hu/felvetel01.mp3'  value="<%= dreamlog.AudioURLs %>" name="dreamlog[AudioURLs]"><br>
+      </div>
+     </div>
+    
+    <div class='ui segment'>
+      <div class='ui big fluid labeled input'>
+        <div class='ui label'>Cím</div>
+        <input class='' type="text" value="<%= dreamlog.dreamTitle %>" name="dreamlog[dreamTitle]">
+      </div>    
+    </div>
+
+    <!--Range sliderek-->
+    
+    
+    <div class='ui segment'>
+      
+      <div class="ui five column very relaxed stackable grid container">
+      
+      
+      <div class="column">
+           <div class='ui segment'>
+             <div class='ui brown bottom attached label'>Tudatosság</div>
+             <output class='ui brown large circular label'></output>
+             <input type="range" data-orientation="vertical" min="1" max="100" step="1" name="dreamlog[Consciousness]" id="range-consciousness" value="<%= dreamlog.Consciousness %>">
+           </div>
+          
+      </div>
+      
+     <div class="column">
+           <div class='ui segment'>
+             <div class='ui red bottom attached label'>Én hangsúly</div>
+             <output class='ui red large circular label'></output>
+             <input type="range" data-orientation="vertical" min="1" max="100" step="1" name="dreamlog[SelfEmphasis]" id="range-selfemphasis" value="<%= dreamlog.SelfEmphasis %>">
+           </div>
+          
+      </div>
+    
+    <div class="column">
+           <div class='ui segment'>
+             <div class='ui green bottom attached label'>Érzés</div>
+             <output class='ui green large circular label'></output>
+             <input type="range" data-orientation="vertical" min="1" max="100" step="1" name="dreamlog[FeelingSensation]" id="range-feelingsensation" value="<%= dreamlog.FeelingSensation %>">
+           </div>
+          
+      </div>
+    
+     <div class="column">
+           <div class='ui segment'>
+             <div class='ui blue bottom attached label'>Jelentés - Megoldás</div>
+             <output class='ui blue large circular label'></output>
+             <input type="range" data-orientation="vertical" min="1" max="100" step="1" name="dreamlog[MeaningSolution]" id="range-meaningsolution" value="<%= dreamlog.MeaningSolution %>">
+           </div>
+          
+      </div>
+ 
+ 
+  
+     <div class="column">
+           <div class='ui segment'>
+             <div class='ui orange bottom attached label'>Aktív - Passzív</div>
+             <output class='ui orange large circular label'></output>
+             <input type="range" data-orientation="vertical" min="1" max="100" step="1" name="dreamlog[ActivePassive]" id="range-activepassive" value="<%= dreamlog.ActivePassive %>">
+           </div>
+      </div>    
+  
+  
+      
+      </div>
+    </div>  
+    
+   <!--Kulcsszavak-->
+    
+    <div class='ui form segment'>
+        <div class='ui fluid labeled input'>
+            <div class='ui label'>Kulcsszavak, szimbólumok</div>
+            <div class="ui fluid multiple search selection dropdown">
+                  <input name='dreamlog[dreamSymbols]' value='<%= dreamlog.dreamSymbols %>' type='hidden' >
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Kulcsszó</div>
+                  <div class="menu">
+                      
+                      <% symbols.forEach(function(symbol){ %>
+                      <div class="item" data-value="<%= symbol %>"> <%= symbol %> </div>
+                      
+                      <% }) %>
+                  </div>
+              
+            </div>
+        </div>  
+    </div>
+     
+    <div class='ui form segment'>
+        <div class='ui fluid labeled input'>
+            <div class='ui label'>Álom kategóriák</div>
+            <div class="ui fluid multiple search selection dropdown">
+        	    <input name="dreamlog[dreamCategory]" value="<%= dreamlog.dreamCategory %>" type="hidden">
+        		<i class="dropdown icon"></i>
+        		<div class="default text"></div>
+        		<div class="menu">
+            	<div class="item" data-value="inger">inger</div>
+        		<div class="item" data-value="prófétikus">prófétikus</div>
+        		<div class="item" data-value="Tudatos">Tudatos</div>
+        		<div class="item" data-value="tudatos">tudatos</div>
+        		<div class="item" data-value="terápiás">terápiás</div>
+    	    </div>
+    	</div>
+      </div>
+    </div>  	
+	
+    
+    
+  <div class='ui segment'>
+      <button class='ui large inverted red fluid submit button' type='submit'>Adatok frissítése!</button>
+  </div>
+  </form>
+  
+  <br>
+  
+  <a class='ui large grey fluid submit button' href="/dreamlogs">Vissza a listára</a>
+  </div>    
+  
+  <br>
+  
+  
+</div>
+
+
+<script>
+
+// Init dropdown 
+$(document).ready(function() {
+
+      $('.ui.dropdown').dropdown({
+          allowAdditions: true,
+          
+        })
+
+    });
+   
+// Init rangeslider.js
+    
+$(function() {
+    var $document   = $(document),
+        $inputRange = $('input[type="range"]');
+    
+    
+    function valueOutput(element) {
+        var value = element.value,
+            output = element.parentNode.getElementsByTagName('output')[0];
+        output.innerHTML = value;
+    }
+    for (var i = $inputRange.length - 1; i >= 0; i--) {
+        valueOutput($inputRange[i]);
+    };
+    $document.on('input', 'input[type="range"]', function(e) {
+        valueOutput(e.target);
+    });
+    
+  
+    $inputRange.rangeslider({
+      polyfill: false 
+    });
+});
+
+
+     
+  
+</script>
+
+
+
+
+<% include ../partials/footer %>

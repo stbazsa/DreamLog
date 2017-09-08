@@ -1,0 +1,146 @@
+<% include ./partials/header %>
+
+<div>
+
+<table class="ui fixed table"  id="myTable">
+  <thead>
+    <tr class='single line'>
+        <th></th>
+        <th>Dátum</th>
+        <th>Nr.</th>
+        <th>Cím</th>
+        <th>Szimbólumok, kulcsszavak</th>
+        <th>Álom kategória</th>
+        <th>Tudatosság</th>
+        <th>Én hangsúly</th>
+        <th>Érzés</th>
+        <th>Jelentés - Megoldás</th>
+        <th>Aktív - Passzív</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% dreamlogs.forEach(function(dreamlog){ %>        
+    <tr class='single line'>
+      <td class="collapsing">
+        <a  href="/dreamlogs/<%=dreamlog._id%>"><i class="green large zoom link icon"></i></a>
+        <form style="display: inline;" id="delete-form" action="/dreamlogs/<%= dreamlog._id %>?_method=DELETE" method="POST">
+            <button class='invisible'>
+                <i class='red large remove link icon'></i>
+            </button>
+        </form>
+      </td>
+      <td><%= moment(dreamlog.dreamDate).format("YY-MM-DD") %></td>
+      <td ><%= dreamlog.dreamNumber %></td>
+      <td><%= dreamlog.dreamTitle %></td>
+      <td><%= dreamlog.dreamSymbols %></td>
+      <td><%= dreamlog.dreamCategory %></td>
+      <td>
+        <div class="ui brown progress bazsa-state-progress" data-percent="<%= dreamlog.Consciousness %>">
+         <div class="bar">
+          <div class='progress'></div>
+         </div>
+        </div>     
+      </td>
+      
+      <td>
+        <div class="ui red progress bazsa-state-progress" data-percent="<%= dreamlog.SelfEmphasis %>">
+         <div class="bar">
+             <div class='progress'></div>
+         </div>
+        </div>              
+      </td>
+      
+      <td>
+        <div class="ui green progress bazsa-state-progress" data-percent="<%= dreamlog.FeelingSensation %>">
+          <div class="bar">
+              <div class='progress'></div>
+          </div>
+        </div>              
+      </td>
+      
+      <td>
+        <div class="ui blue progress bazsa-state-progress" data-percent="<%= dreamlog.MeaningSolution %>">
+         <div class="bar">
+             <div class='progress'></div>
+         </div>
+        </div>              
+      </td>
+      <td>
+        <div class="ui orange progress bazsa-state-progress" data-percent="<%= dreamlog.ActivePassive %>">
+         <div class="bar">
+             <div class='progress'></div>
+         </div>
+        </div>              
+      </td>
+    </tr>
+<% }); %>
+  </tbody>
+  <tfoot>
+    
+  </tfoot>
+</table>
+
+</div>
+
+<script>
+
+  
+$(document).ready(function(){
+
+// init progress bars   
+     $('.bazsa-state-progress').progress({
+      autoSuccess: false,
+      showActivity: false,
+    });
+    
+    
+// Init data table    
+    $('#myTable').DataTable(
+      {
+        "columnDefs": [{ "width": "6%", "targets": 0 },
+                       { "width": "8%", "targets": 1 },
+                       { "width": "4%", "targets": 2 }],
+                    //   { "width": "auto", "targets": 3 },
+                    //   { "width": "auto", "targets": 4 },
+                    //   { "width": "auto", "targets": 5 },
+                    //   { "width": "6%", "targets": 6 },
+                    //   { "width": "6%", "targets": 7 },
+                    //   { "width": "6%", "targets": 8 },
+                    //   { "width": "6%", "targets": 9 },
+                    //   { "width": "6%", "targets": 10 }],
+        
+         
+          "language":{
+             "sEmptyTable":     "Nincs rendelkezésre álló adat",
+             "sInfo":           "Találatok: _START_ - _END_ Összesen: _TOTAL_",
+             "sInfoEmpty":      "Nulla találat",
+             "sInfoFiltered":   "(_MAX_ összes rekord közül szűrve)",
+             "sInfoPostFix":    "",
+             "sInfoThousands":  " ",
+             "sLengthMenu":     "_MENU_ találat oldalanként",
+             "sLoadingRecords": "Betöltés...",
+             "sProcessing":     "Feldolgozás...",
+             "sSearch":         "Keresés:",
+             "sZeroRecords":    "Nincs a keresésnek megfelelő találat",
+             "oPaginate": {"sFirst":    "Első",
+                          "sPrevious": "Előző",
+                          "sNext":     "Következő",
+                          "sLast":     "Utolsó"},
+             "oAria": {
+                 "sSortAscending":  ": aktiválja a növekvő rendezéshez",
+                 "sSortDescending": ": aktiválja a csökkenő rendezéshez"
+             }
+          },
+           "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "Az összes"]]
+      }
+    );
+});
+
+
+
+</script>
+
+
+
+
+<% include ./partials/footer %>

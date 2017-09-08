@@ -1,0 +1,316 @@
+<% include ../partials/header %>
+
+<div class='ui container'>        
+  <br>
+  <form class='ui form' action="/dreamlogs" method="POST">
+    
+    
+    <!--Dátum, sorszám, hangfelvétel-->
+    <div class='ui segment'>
+      
+      <div class='ui labeled input'>
+        <div class='ui label'>Dátum</div>
+        <div class='ui calendar' id='mycalendar'>
+          <input  type="date" name='dreamlog[dreamDate]' placeholder='ÉÉÉÉ.HH.NN' size='10' maxlength="10">
+        </div>
+      </div>
+      
+      <div class='ui labeled input'>
+        <div class='ui label'>Sorszám</div>
+        <input type="number" name="dreamlog[dreamNumber]" placeholder='(1..50)' size='2' maxlength="2">
+      </div>
+    
+      <div class='ui labeled input '>
+        <div class='ui label'>Hangfelvételek</div>
+        <input class='' type="url" placeholder='http://....mp3' name="dreamlog[AudioURLs]">
+      </div>
+      
+  </div>
+    
+    <div class='ui segment'>
+      <div class='ui big fluid labeled input'>
+        <div class='ui label'>Cím</div>
+        <input class='' type="text" name="dreamlog[dreamTitle]" size='20'>
+      </div>    
+    </div>
+
+    <!--Range sliderek-->
+    
+    <div class='ui segment'>
+      
+      <div class="ui six column doubling stackable grid container">
+      
+      
+      <div class="column">
+           <div class='ui segment'>
+             <div class='ui brown bottom attached label'>Tudatosság</div>
+             <input type="range" data-orientation="vertical" min="1" max="10" step="1">
+             <br>
+             <output class='ui brown big circular label'></output>
+             <br>
+           </div>
+          
+      </div>
+      
+    
+    
+    
+    
+      <div class="column">
+            <div class='ui segment'>
+              <div class='ui brown bottom attached label'>Tudatosság</div>
+              <div class='ui brown big circular label' id='display-consciousness'></div>
+              <div class="ui basic large brown vertical reversed range" id='range-consciousness'></div>
+              <input id="input-consciousness" type='text' name="dreamlog[Consciousness]" style='display:none;'>
+            </div>
+          
+      </div>
+      
+      <div class="column">
+         <div class='ui segment'> 
+          <div class='ui red bottom attached label'>Én hangsúly</div>
+          <div class='ui red big circular label' id='display-selfemphasis'></div>
+          <div class="ui basic large red vertical reversed range" id='range-selfemphasis'></div>
+          <input id="input-selfemphasis" type='text' name="dreamlog[SelfEmphasis]" style='display:none;'>
+         </div>
+      </div>
+      
+      <div class="column">
+         <div class='ui segment'> 
+          <div class='ui green bottom attached label'>Érzés</div>
+          <div class='ui green big circular label' id='display-feelingsensation'></div>
+          <div class="ui basic large green vertical reversed range" id='range-feelingsensation'></div>
+          <input id="input-feelingsensation" type='text' name="dreamlog[FeelingSensation]" style='display:none;'>
+         </div>
+      </div>
+      
+      <div class="column">
+         <div class='ui segment'> 
+          <div class='ui blue bottom attached label'>Jelentés-Megoldás</div>
+          <div class='ui blue big circular label ' id='display-meaningsolution'></div>
+          <div class="ui basic large blue vertical reversed range" id='range-meaningsolution'></div>
+          <input id="input-meaningsolution" type='text' name="dreamlog[MeaningSolution]" style='display:none;'>
+         </div>
+      </div>
+      
+      <div class="column">
+         <div class='ui segment'> 
+          <div class='ui orange bottom attached label'>Aktív-Passzív</div>
+          <div class='ui orange big circular label' id='display-activepassive'></div>
+          <div class="ui basic large orange vertical reversed range" id='range-activepassive'></div>
+          <input id="input-activepassive" type='text' name="dreamlog[ActivePassive]" style='display:none;'>
+         </div>
+      </div>
+      
+      </div>
+    </div>  
+    
+    
+    
+    <div class='ui form segment'>
+          <div class='ui fluid labeled input'>
+      <div class='ui label'>Kulcsszavak, szimbólumok</div>
+          <div class="ui fluid multiple search selection dropdown">
+              <input name='dreamlog[dreamSymbols]' type='hidden' >
+              <i class="dropdown icon"></i>
+              <div class="default text"></div>
+              <div class="menu">
+                  <% symbols.forEach(function(symbol){ %>
+                  <div class="item" data-value="<%= symbol %>"> <%= symbol %> </div>
+                  
+                  <% }) %>
+              </div>
+          </div>
+      </div>  
+       
+    <br>
+      
+    <div class='ui fluid labeled input'>
+      <div class='ui label'>Álom kategóriák</div>
+      <div class="ui fluid multiple search selection dropdown">
+	    <input name="dreamlog[dreamCategory]" type="hidden">
+		<i class="dropdown icon"></i>
+		<div class="default text"></div>
+		<div class="menu">
+    	<div class="item" data-value="inger">Inger</div>
+		<div class="item" data-value="profetikus">Prófétikus</div>
+		<div class="item" data-value="Tudatos">Tudatos</div>
+		<div class="item" data-value="tudatos">tudatos</div>
+		<div class="item" data-value="terapias">terápiás</div>
+		        </div>
+		    </div>
+	</div>
+  
+  <div class='ui segment'>
+      <button class='ui large grey fluid submit button' type='submit'>Naplózás!</button>
+  </div>
+  
+    </div>
+    </div>
+    </form>
+</div>
+
+
+
+
+<style>
+  .vertical.reversed.range {
+      /*display: flex;*/
+      /*margin-left: 0.7em;*/
+      /*margin-top:2em;*/
+      /*margin-bottom:2em;*/
+      margin:auto;
+      height: 15em;
+  }
+  
+  #display-consciousness {
+      margin-left:1em;
+  }
+  
+  #display-selfemphasis {
+      margin-left:1em;
+  }
+  #display-feelingsensation {
+      margin-left:1em;
+  }
+  
+   #display-meaningsolution {
+      margin-left:1em;
+  }
+  
+   #display-activepassive {
+      margin-left:1em;
+  }
+  
+  .ui.label {
+      text-align:center;
+  }
+  
+  .rangeslider__fill {
+	background: #A5673F;
+}
+
+  .rangeslider--vertical {
+    margin:auto;
+  }
+  
+  output {
+    margin:auto;
+  }
+  
+</style>
+
+<script>
+  $(document).ready(function() {
+    // Semantic UI Range
+    $('.ui.range').range({
+      min: 1,
+      max: 10,
+      start: 10,
+      step: 1,
+      
+       onChange: function(value) {
+        switch(this.id) {
+              case "range-consciousness":
+                  $('#display-consciousness').html(value);
+                  $('#input-consciousness').val(value);
+                  break;
+                
+              case "range-selfemphasis":
+                  $('#display-selfemphasis').html(value);
+                  $('#input-selfemphasis').val(value);
+                  break;
+               
+              case "range-feelingsensation":  
+                  $('#display-feelingsensation').html(value);
+                  $('#input-feelingsensation').val(value);
+                  break;
+                  
+              case "range-meaningsolution":
+                  $('#display-meaningsolution').html(value);
+                  $('#input-meaningsolution').val(value);
+                  break;
+                  
+              case "range-activepassive":
+                  $('#display-activepassive').html(value);
+                  $('#input-activepassive').val(value);
+                  break;
+                  
+              default :
+                 
+            }
+       }
+      });
+      
+      $('.ui.dropdown')
+    .dropdown({
+      allowAdditions: true
+    })
+    
+    $('#mycalendar').calendar({
+      type: 'date',
+      firstDayOfWeek: 1,
+      today: true,
+      monthFirst: true,
+     
+      text: {
+      days: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'],
+      months: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'],
+      monthsShort: ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'],
+      today: 'Ma',
+      now: 'Most',
+      am: 'de',
+      pm: 'du'
+    },
+     
+      
+      formatter: {
+        date: function (date, settings) {
+            if (!date) return '';
+            var day = date.getDate() + '';
+            if (day.length < 2) {
+                day = '0' + day;
+            }
+            var month = (date.getMonth() + 1) + '';
+            if (month.length < 2) {
+                month = '0' + month;
+            }
+            var year = date.getFullYear();
+            return year + '.' + month + '.' + day;
+          
+            }
+      },
+      
+     
+      
+    });
+    
+    // rangeslider.js
+    
+    
+var $element = $('input[type="range"]');
+var $output = $('output');
+
+function updateOutput(el, val) {
+  el.textContent = val;
+}
+
+$element
+  .rangeslider({
+    polyfill: false,
+    onInit: function() {
+      updateOutput($output[0], this.value);
+    }
+  })
+  .on('input', function() {
+    updateOutput($output[0], this.value);
+  });
+    
+
+  });
+</script>
+
+
+
+
+<% include ../partials/footer %>

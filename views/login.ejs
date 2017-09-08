@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+<h1>Bejelentkezés</h1>
+
+
+<form action="/login" method="POST">
+    <input type="text" name="username" placeholder="Felhasználónév"></input>
+    <input type="text" name="password" placeholder="Jelszó"></input>
+    <input type="submit" value="Bejeletkezik!">
+    
+</form>
+
+<% include ./partials/footer %>

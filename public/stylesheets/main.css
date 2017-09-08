@@ -1,0 +1,51 @@
+
+.rangeslider__fill {
+	background: #777777;
+}
+
+.rangeslider--vertical {
+    margin:auto;
+  }
+  
+output {
+    margin:auto;
+  }
+
+.bottom.attached.label {
+  
+  text-align:center;
+}
+
+.big.circular.label {
+    margin-bottom:1.8em;
+}
+
+.rangeslider__fill {
+	background: #777777;
+}
+
+.invisible {
+    background: none;
+    padding: 0px;
+    border: none;
+}
+
+.ui.progress:last-child {
+  margin:0;
+}
+
+.ui.progress .bar>.progress {
+  left:5px;
+}
+
+.ui.selection.dropdown {
+  min-width: 4em;
+}
+
+/*body {*/
+/*  background-color: #EBB521;*/
+/*}*/
+
+/*table {*/
+/*  background-color: #FFB521;*/
+/*}*/

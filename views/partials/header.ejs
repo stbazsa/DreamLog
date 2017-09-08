@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>DreamLog</title>
+        
+        <!--JQuery-->
+        <script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous">
+        </script>
+        
+        <!--Semantic UI-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"></link>
+        <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js'></script>
+        
+        
+        <!--Range slider-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.1/rangeslider.min.css"></link>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.1/rangeslider.min.js'></script>
+        
+        
+        <!--DataTables-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/dataTables.semanticui.min.js"></script>
+        
+        <!--Semantic UI Calendar-->
+        <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>
+        <!--<script type="text/javascript" src="/node_modules/semantic-ui-calendar/dist/calendar.min.js"></script>-->
+        <!--<link rel="stylesheet" href="/node_modules/semantic-ui-calendar/dist/calendar.min.css" />-->
+        
+        <!--Local CSS overrides-->
+        <link rel="stylesheet" href="/stylesheets/main.css"></link>
+        
+        
+        
+        
+        
+    </head>
+    <body class='ui container' >
+        
+        <div class="ui dark blue inverted menu">
+            <div class="header item">DreamLog</div>
+            <div class="item">
+                <a href="/dreamlogs">
+                    <i class='list icon'></i>
+                    Álom lista
+                </a>
+            </div>
+            
+            <div class="item">
+                <a href="/dreamlogs/new">
+                    <i class='plus icon'></i>
+                    Új álom felvitele
+                </a>
+            </div>
+            
+            
+            <div class="right aligned item">Felhasználó:
+                   <% if(!currentUser) {%>
+                   Nincs bejelentkezve
+                   <% } else {%>
+                   <%= currentUser.username %>
+                   <% } %>
+            </div>
+            <div class="item">
+                <a href="/logout">
+                    <i class='sign out icon'></i>
+                    Kilépés
+                </a>
+            </div>
+            
+        </div>
