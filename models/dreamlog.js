@@ -14,7 +14,13 @@ var dreamlogSchema = new mongoose.Schema({
     dreamSymbols:                       [String],
     dreamCategory:                      [String],
     
+    daySymbols:                         [String],
+    isDayDream:                         Boolean,
+    dreamDuration:                      Number,
+    dreamSelected:                      Boolean,
     
+
+// Not in use yet:    
     easeOfGoingToSleep:                 Number,
     bodyPosition:                       String,
     bodyPositionChange:                 String,
