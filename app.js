@@ -24,6 +24,8 @@ app.use(methodOverride("_method")); //Override POST for RESFTful design and impl
 // Initializa DB with sample data
 //seedDB();
 
+//Initialise empty DB, set hungarian collation
+
 // Passport configuration
 app.use(require("express-session")({
     secret:"Az eg kek, a fu zold",
@@ -58,6 +60,23 @@ app.get("/dreamlogs",  function(req,res){ //isLoggedIn,
     });
 });
 
+
+// NEW - show form to collect new dream data before adding it to database
+app.get("/dreamlogs/new",function(req,res){
+   
+    DreamLog.distinct("dreamSymbols").exec(function(err,symbols){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("dreamlogs/new",{symbols:symbols.sort(), moment:moment});
+            
+        }
+        
+    });
+    
+})
+
+
 // CREATE - add new dream log to database
 app.post("/dreamlogs", function(req,res){
    
@@ -83,7 +102,7 @@ app.post("/dreamlogs", function(req,res){
 });
 
 
-// Delete - find by id and delete
+// DELETE - find by id and delete
 app.delete("/dreamlogs/:id", function(req,res){
     DreamLog.findByIdAndRemove(req.params.id,function(err){
         if(err) {
@@ -94,9 +113,27 @@ app.delete("/dreamlogs/:id", function(req,res){
     })
 })
 
+// SHOW - shows more info about one DreamLog
+app.get("/dreamlogs/:id", function(req,res){
+    //Find actual symbol list
+    DreamLog.distinct("dreamSymbols").exec(function(err,symbols){
+        if(err) {
+            console.log(err);
+        } else {
+            //Find the dreamlog with provided ID
+            DreamLog.findById(req.params.id,function(err, foundDreamLog){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.render("dreamlogs/show",{symbols:symbols.sort(),dreamlog:foundDreamLog,moment:moment,currentUser:req.user});   
+                }
+            });
+        }
+        
+    });
+});
 
-// UDPADE - Update dream log
-//Find by id and update
+// UDPADE - Find by id and update
 app.post("/dreamlogs/:id",function(req,res){
     
     // Prepare data to be saved
@@ -120,71 +157,11 @@ app.post("/dreamlogs/:id",function(req,res){
 
 
 
-// NEW - show form to collect new dream data before adding it to database
-app.get("/dreamlogs/new",function(req,res){
-    DreamLog.find({},{_id:0, dreamSymbols:1},function(err,foundDreamLogs){
-        if(err) {
-            console.log(err);
-        } else {
-            
-            // Szimbólumok kibányászása egy tömbbe és átadása a GUI-nak
-            var symbolList = new Array();
-            foundDreamLogs.forEach(function(dreamlog){
-                
-                dreamlog.dreamSymbols.forEach(function(symbol){
-                    
-                    if(symbolList.indexOf(symbol)<0) symbolList.push(symbol);    
-                })
-                
-            })
-            
-            res.render("dreamlogs/new",{symbols:symbolList.sort(), moment:moment})
-        }
-    })
-})
+
     
 
 
 
-// SHOW - shows more info about one DreamLog
-app.get("/dreamlogs/:id", function(req,res){
-    //Find the dreamlog with provided ID
-    
-     DreamLog.find({},{_id:0, dreamSymbols:1},function(err,foundDreamLogs){
-        if(err) {
-            console.log(err);
-        } else {
-            
-            // Szimbólumok kibányászása egy tömbbe és átadása a GUI-nak
-            var symbolList = new Array();
-            foundDreamLogs.forEach(function(dreamlog){
-                
-                dreamlog.dreamSymbols.forEach(function(symbol){
-                    
-                    if(symbolList.indexOf(symbol)<0) symbolList.push(symbol);    
-                })
-                
-            })
-            // Keresett napló megjelenítése     
-            DreamLog.findById(req.params.id,function(err, foundDreamLog){
-                if(err){
-                        console.log(err);
-                }  else {
-                //console.log(foundDreamLogs);
-                //Render show template with the DreamLogs Index
-                res.render("dreamlogs/show",{symbols:symbolList.sort(),dreamlog:foundDreamLog,moment:moment,currentUser:req.user});       
-      }
-    });        
-            
-        }
-    })
-    
-    
-    
-    
-    
-   
-})
 
 
 
